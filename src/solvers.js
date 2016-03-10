@@ -17,7 +17,7 @@
 
 window.findNRooksSolution = function(n) {
   var solution = undefined; //fixme
-
+  var solutionArr = [];
   var checkBoard = function (board, row) {
     // if rows is equal to n
       // check if valid solution
@@ -28,10 +28,9 @@ window.findNRooksSolution = function(n) {
         solution = board;
         return;
       } else {
-        var newBoard = jQuery.extend(true, {}, board);
-        var myRow = board.get(row);
-        myRow[i] = 1;
-        //newBoard.set({row: myRow});
+        var newBoard = JSON.parse(JSON.stringify(board));
+        newBoard[row][i] = 1;
+    
         if (!newBoard.hasColConflictAt(i)) { // if does not have a conflict pass in board to recursive function
           checkBoard(newBoard, row + 1);
         }
@@ -42,12 +41,14 @@ window.findNRooksSolution = function(n) {
 
   // for loop every position in  first row
   for (var i = 0; i < n; i++) {
-    var board = new Board({'n': n });
-    var newRow = board.get(0);
-    newRow[i] = 1;
-    //board.set({0: newRow});
+    var startBoard = new Board({'n': n });
+    startBoard[0][i] = 1;
     
-    checkBoard(board, 1);
+    checkBoard(startBoard, 1);
+  }
+
+  for (var i = 0; i < n; i++) {
+    solutionArr.push(solution.get(i));
   }
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
