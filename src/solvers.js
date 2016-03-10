@@ -23,17 +23,19 @@ window.findNRooksSolution = function(n) {
       // check if valid solution
         // return board if solution is valid
     // for every position in this row
-    for (var i = 0; i < n; i++) {
-      if (row === n) { // base case: last rows in board 
-        solution = board;
-        return;
-      } else {
-        var newBoard = jQuery.extend(true, {}, board);
-        var myRow = newBoard.get(row);
-        myRow[i] = 1;
-        //newBoard.set({row: myRow});
-        if (!newBoard.hasColConflictAt(i)) { // if does not have a conflict pass in board to recursive function
-          checkBoard(newBoard, row + 1);
+    if (solution === undefined) {
+      for (var i = 0; i < n; i++) {  
+        if (row === n) { // base case: last rows in board 
+          solution = board;
+          return;
+        } else {
+          var newBoard = jQuery.extend(true, {}, board);
+          var myRow = newBoard.get(row);
+          myRow[i] = 1;
+          //newBoard.set({row: myRow});
+          if (!newBoard.hasColConflictAt(i)) { // if does not have a conflict pass in board to recursive function
+            checkBoard(newBoard, row + 1);
+          }
         }
       }
     }
@@ -48,6 +50,7 @@ window.findNRooksSolution = function(n) {
     //board.set({0: newRow});
     
     checkBoard(board, 1);
+     
   }
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
