@@ -17,38 +17,25 @@
 
 window.findNRooksSolution = function(n) {
   var solution = []; //fixme
-  var board = new Board({'n': n });
+  var rookPos = 0;
 
-  var checkBoard = function (row) {
-    while(solution.length === 0){
-
-
-      if (row === n) { // base case: last rows in board 
-        for(var i = 0; i < n; i++) {
-          solution.push(board.get(i));
-
-        }
-        console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-        return solution;
-
-      }  
-      for (var i = 0; i < n; i++) {  
-
-        board.togglePiece(row, i);
-
-        if (!board.hasAnyColConflicts() && !board.hasAnyRowConflicts()) { // if does not have a conflict pass in board to recursive function
-
-          checkBoard(row + 1);
-        }
-        board.togglePiece(row, i);
+  while (solution.length < n) {
+    var row = [];
+    for(var i = 0; i < n; i++) {
+      if(i === rookPos) {
+        row.push(1);
+      } else {
+        row.push(0);
       }
     }
-     
-  };
+    solution.push(row);
+    rookPos++;
+  }
 
 
-  checkBoard(0);
+  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
+
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
@@ -83,7 +70,24 @@ window.countNRooksSolutions = function(n) {
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-  var solution = undefined; //fixme
+  var solution = []; //fixme
+  var board = new Board({'n': n });
+  for(var i = 0; i < n; i++) {
+    for(var j = 0; j < n; j++) {
+      board.togglePiece(i, j);
+      if(board.hasAnyQueensConflicts()) {
+        board.togglePiece(i, j);
+      } else {
+        break;
+      }
+    }
+
+  }
+
+  for(var i = 0; i < n; i++) {
+    solution.push(board.get(i));
+  }
+
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
