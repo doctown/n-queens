@@ -125,7 +125,7 @@
       var conflictFound = false;
 
       for (var i = 0; i < numOfCols; i++) {
-        if (this.hasColConflict(i)) {
+        if (this.hasColConflictAt(i)) {
           conflictFound = true;
         }
       }
@@ -153,12 +153,10 @@
       }
       // for each iteration, increment the count of row and col by 1
       for (var row = initRow; row < n; row++) {
-        for (var col = initCol; col < n; col++) {
-          // if row/col equals 1 increment count
-          if (this.get(row)[col] === 1) {
-            count++;
-          }
+        if (this.get(row)[initCol] === 1) {
+          count++;
         }
+        initCol++;
       }
 
       return count > 1;
@@ -168,6 +166,7 @@
     hasAnyMajorDiagonalConflicts: function() {
       // get the number of columns
       var lastColIndexAtFirstRow = -(this.get('n')) + 1;
+      var n = this.get('n');
       var hasDiagConflict = false;
 
       // for all columns call major diagonal conflict on that column
@@ -200,12 +199,11 @@
       }
       // for each iteration, increment the count of row and col by 1
       for (var row = initRow; row < n; row++) {
-        for (var col = initCol; col >= 0; col--) {
-          // if row/col equals 1 increment count
-          if (this.get(row)[col] === 1) {
-            count++;
-          }
+        // if row/col equals 1 increment count
+        if (this.get(row)[initCol] === 1) {
+          count++;
         }
+        initCol--;
       }
 
       return count > 1;
@@ -214,11 +212,11 @@
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
       // get the number of columns
-      var lastColIndexAtFirstRow = -(this.get('n')) + 1;
       var hasDiagConflict = false;
+      var n = this.get('n');
 
       // for all columns call minor diagonal conflict on that column
-      for (var i = lastColIndexAtFirstRow + 1; i < n; i++) {
+      for (var i = 0; i < 2 * (n - 1); i++) {
         if (this.hasMinorDiagonalConflictAt(i)) {
           hasDiagConflict = true;
           break;
