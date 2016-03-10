@@ -95,7 +95,10 @@ window.findNQueensSolution = function(n) {
      
   };
 
-  if(n === 0){
+  if(n === 2 || n === 3){
+    for(var i = 0; i < n; i++){
+      solutionArray.push([]);
+    }
     return solutionArray;
   }
   checkBoard(0);
@@ -103,6 +106,7 @@ window.findNQueensSolution = function(n) {
   for(var i = 0; i < n; i++){
     solutionArray.push(solution.get(i));
   }
+  console.log(solutionArray);
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solutionArray;
 };
