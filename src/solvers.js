@@ -188,6 +188,7 @@ var date = new Date();
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
+  var now = date.getTime();
   var solutionCount = 0;
   // var board = new Board({'n': n });
   var board = createBoard(n);
@@ -232,10 +233,9 @@ window.countNQueensSolutions = function(n) {
   //
   //};
 
-  var now = date.getTime();
   checkBoard(0);
   date = new Date();
   var later = date.getTime();
-  console.log('Number of solutions for ' + n + ' queens:', solutionCount, "in ", later - now, "seconds.");
+  console.log('Number of solutions for ' + n + ' queens:', solutionCount, "in ", now, "milliseconds.", later," milliseconds");
   return solutionCount;
 };
